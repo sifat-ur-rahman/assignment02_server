@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Query, Schema, model } from 'mongoose';
 import {
   TAddress,
   TFullName,
@@ -39,4 +39,9 @@ userSchema.methods.isUserExits = async function (id: string) {
   const existingUser = await User.findOne({ id });
   return existingUser;
 };
+
+userSchema.pre(/^find/, function (this: Query<TUser, Document>, next) {
+  this.select('-password');
+  next();
+});
 export const User = model<TUser, UserModel>('User', userSchema);

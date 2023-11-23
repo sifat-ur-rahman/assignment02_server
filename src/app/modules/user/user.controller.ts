@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { UserService } from './user.service';
 import userValidationSchema from './user.validation';
 
@@ -46,7 +46,7 @@ const getAllUser = async (req: Request, res: Response) => {
     });
   }
 };
-const getOneUser = async (req: Request, res: Response, next: NextFunction) => {
+const getOneUser = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
     const result = await UserService.getOneUserFromDB(userId);
@@ -66,7 +66,6 @@ const getOneUser = async (req: Request, res: Response, next: NextFunction) => {
           description: 'User not found!',
         },
       });
-      next();
     }
   } catch (error) {
     res.status(500).json({
@@ -76,6 +75,41 @@ const getOneUser = async (req: Request, res: Response, next: NextFunction) => {
         code: 404,
         description: 'User not found!',
       },
+    });
+  }
+};
+
+const updateUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const updatedUserData = req.body;
+    const result = await UserService.updateUserFromDB(userId, updatedUserData);
+
+    res.status(200).json({
+      success: true,
+      message: 'User is retrieved successfully',
+      data: result,
+    });
+
+    // if (!result) {
+    //   res.status(500).json({
+    //     success: false,
+    //     message: 'User not found',
+    //     error: {
+    //       code: 404,
+    //       description: 'User not found!',
+    //     },
+    //   });
+    // }
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+      err,
     });
   }
 };
@@ -108,4 +142,5 @@ export const UserControllers = {
   getAllUser,
   getOneUser,
   deleteOneUser,
+  updateUser,
 };

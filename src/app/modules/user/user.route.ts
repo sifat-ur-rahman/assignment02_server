@@ -7,5 +7,6 @@ router.post('/api/users', UserControllers.createUser);
 router.get('/api/users', UserControllers.getAllUser);
 router.get('/api/users/:userId', UserControllers.getOneUser);
 router.delete('/api/users/:userId', UserControllers.deleteOneUser);
+router.put('/api/users/:userId', UserControllers.updateUser);
 
 export const UserRoute = router;

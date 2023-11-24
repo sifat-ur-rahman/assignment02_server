@@ -41,6 +41,10 @@ const deleteOneUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, functi
     const result = yield user_model_1.User.deleteOne({ userId: userId });
     return result;
 });
+const getOneUserOrderFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.User.findOne({ userId });
+    return result;
+});
 exports.UserService = {
     createUserIntoDB,
     getAllUserFromDB,
@@ -48,4 +52,5 @@ exports.UserService = {
     deleteOneUserFromDB,
     updateUserFromDB,
     updateUserOrderFromDB,
+    getOneUserOrderFromDB,
 };

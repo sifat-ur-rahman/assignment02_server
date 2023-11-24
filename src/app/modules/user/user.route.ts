@@ -9,5 +9,5 @@ router.get('/api/users/:userId', UserControllers.getOneUser);
 router.delete('/api/users/:userId', UserControllers.deleteOneUser);
 router.put('/api/users/:userId', UserControllers.updateUser);
 router.put('/api/users/:userId/orders', UserControllers.updateUserOrder);
-
+router.get('/api/users/:userId/orders', UserControllers.getOneUserOrder);
 export const UserRoute = router;

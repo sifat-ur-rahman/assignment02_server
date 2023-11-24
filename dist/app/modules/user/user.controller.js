@@ -171,6 +171,38 @@ const updateUserOrder = (req, res) => __awaiter(void 0, void 0, void 0, function
         });
     }
 });
+const getOneUserOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.params;
+        const result = yield user_service_1.UserService.getOneUserOrderFromDB(userId);
+        const orders = result === null || result === void 0 ? void 0 : result.orders;
+        res.status(200).json({
+            success: true,
+            message: 'Order fetched successfully!',
+            data: { orders },
+        });
+        if (!result) {
+            res.status(500).json({
+                success: false,
+                message: 'User not found',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'User not found',
+            error: {
+                code: 404,
+                description: 'User not found!',
+            },
+        });
+    }
+});
 exports.UserControllers = {
     createUser,
     getAllUser,
@@ -178,4 +210,5 @@ exports.UserControllers = {
     deleteOneUser,
     updateUser,
     updateUserOrder,
+    getOneUserOrder,
 };

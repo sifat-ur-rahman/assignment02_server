@@ -64,4 +64,10 @@ userSchema.post('save', function (doc, next) {
     doc.password = '';
     next();
 });
+userSchema.method('toJSON', function () {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const data = this.toObject();
+    delete data.password;
+    return data;
+});
 exports.User = (0, mongoose_1.model)('User', userSchema);

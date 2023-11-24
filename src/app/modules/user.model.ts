@@ -61,4 +61,12 @@ userSchema.post('save', function (doc, next) {
   next();
 });
 
+userSchema.method('toJSON', function () {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any = this.toObject();
+  delete data.password;
+
+  return data;
+});
+
 export const User = model<TUser, UserModel>('User', userSchema);

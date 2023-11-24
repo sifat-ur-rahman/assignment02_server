@@ -60,4 +60,8 @@ userSchema.pre('save', function (next) {
         next();
     });
 });
+userSchema.post('save', function (doc, next) {
+    doc.password = '';
+    next();
+});
 exports.User = (0, mongoose_1.model)('User', userSchema);

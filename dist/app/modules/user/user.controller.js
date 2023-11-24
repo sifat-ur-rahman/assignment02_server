@@ -65,7 +65,7 @@ const getOneUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const result = yield user_service_1.UserService.getOneUserFromDB(userId);
         res.status(200).json({
             success: true,
-            message: 'User is retrieved successfully',
+            message: 'User fetched successfully!',
             data: result,
         });
         if (!result) {
@@ -97,19 +97,9 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         const result = yield user_service_1.UserService.updateUserFromDB(userId, updatedUserData);
         res.status(200).json({
             success: true,
-            message: 'User is retrieved successfully',
+            message: 'User updated successfully!',
             data: result,
         });
-        // if (!result) {
-        //   res.status(500).json({
-        //     success: false,
-        //     message: 'User not found',
-        //     error: {
-        //       code: 404,
-        //       description: 'User not found!',
-        //     },
-        //   });
-        // }
     }
     catch (err) {
         res.status(500).json({
@@ -209,15 +199,16 @@ const getOneUserOrderPrice = (req, res) => __awaiter(void 0, void 0, void 0, fun
         const result = yield user_service_1.UserService.getOneUserOrderFromDB(userId);
         const orders = result === null || result === void 0 ? void 0 : result.orders;
         if (orders) {
-            let totalPrice = 0;
+            let calculatedPrice = 0;
             for (let i = 0; i < orders.length; i++) {
                 const element = orders[i];
-                totalPrice += element.price * element.quantity;
+                calculatedPrice += element.price * element.quantity;
             }
+            const totalPrice = Number(calculatedPrice.toFixed(2));
             res.status(200).json({
                 success: true,
-                message: 'Order fetched successfully!',
-                data: Number(totalPrice.toFixed(2)),
+                message: 'Total price calculated successfully!',
+                data: { totalPrice },
             });
         }
         else {

@@ -53,7 +53,7 @@ const getOneUser = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: 'User is retrieved successfully',
+      message: 'User fetched successfully!',
       data: result,
     });
 
@@ -87,20 +87,9 @@ const updateUser = async (req: Request, res: Response) => {
 
     res.status(200).json({
       success: true,
-      message: 'User is retrieved successfully',
+      message: 'User updated successfully!',
       data: result,
     });
-
-    // if (!result) {
-    //   res.status(500).json({
-    //     success: false,
-    //     message: 'User not found',
-    //     error: {
-    //       code: 404,
-    //       description: 'User not found!',
-    //     },
-    //   });
-    // }
   } catch (err) {
     res.status(500).json({
       success: false,
@@ -203,15 +192,17 @@ const getOneUserOrderPrice = async (req: Request, res: Response) => {
     const result = await UserService.getOneUserOrderFromDB(userId);
     const orders = result?.orders;
     if (orders) {
-      let totalPrice = 0;
+      let calculatedPrice = 0;
       for (let i = 0; i < orders.length; i++) {
         const element = orders[i];
-        totalPrice += element.price * element.quantity;
+        calculatedPrice += element.price * element.quantity;
       }
+
+      const totalPrice = Number(calculatedPrice.toFixed(2));
       res.status(200).json({
         success: true,
-        message: 'Order fetched successfully!',
-        data: Number(totalPrice.toFixed(2)),
+        message: 'Total price calculated successfully!',
+        data: { totalPrice },
       });
     } else {
       res.status(500).json({

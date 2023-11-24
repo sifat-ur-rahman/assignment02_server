@@ -203,6 +203,45 @@ const getOneUserOrder = (req, res) => __awaiter(void 0, void 0, void 0, function
         });
     }
 });
+const getOneUserOrderPrice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.params;
+        const result = yield user_service_1.UserService.getOneUserOrderFromDB(userId);
+        const orders = result === null || result === void 0 ? void 0 : result.orders;
+        if (orders) {
+            let totalPrice = 0;
+            for (let i = 0; i < orders.length; i++) {
+                const element = orders[i];
+                totalPrice += element.price * element.quantity;
+            }
+            res.status(200).json({
+                success: true,
+                message: 'Order fetched successfully!',
+                data: Number(totalPrice.toFixed(2)),
+            });
+        }
+        else {
+            res.status(500).json({
+                success: false,
+                message: 'User not found',
+                error: {
+                    code: 404,
+                    description: 'User not found!',
+                },
+            });
+        }
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'User not found',
+            error: {
+                code: 404,
+                description: 'User not found!',
+            },
+        });
+    }
+});
 exports.UserControllers = {
     createUser,
     getAllUser,
@@ -211,4 +250,5 @@ exports.UserControllers = {
     updateUser,
     updateUserOrder,
     getOneUserOrder,
+    getOneUserOrderPrice,
 };

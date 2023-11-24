@@ -197,6 +197,43 @@ const getOneUserOrder = async (req: Request, res: Response) => {
     });
   }
 };
+const getOneUserOrderPrice = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const result = await UserService.getOneUserOrderFromDB(userId);
+    const orders = result?.orders;
+    if (orders) {
+      let totalPrice = 0;
+      for (let i = 0; i < orders.length; i++) {
+        const element = orders[i];
+        totalPrice += element.price * element.quantity;
+      }
+      res.status(200).json({
+        success: true,
+        message: 'Order fetched successfully!',
+        data: Number(totalPrice.toFixed(2)),
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'User not found',
+      error: {
+        code: 404,
+        description: 'User not found!',
+      },
+    });
+  }
+};
 
 export const UserControllers = {
   createUser,
@@ -206,4 +243,5 @@ export const UserControllers = {
   updateUser,
   updateUserOrder,
   getOneUserOrder,
+  getOneUserOrderPrice,
 };

@@ -14,4 +14,5 @@ router.delete('/api/users/:userId', user_controller_1.UserControllers.deleteOneU
 router.put('/api/users/:userId', user_controller_1.UserControllers.updateUser);
 router.put('/api/users/:userId/orders', user_controller_1.UserControllers.updateUserOrder);
 router.get('/api/users/:userId/orders', user_controller_1.UserControllers.getOneUserOrder);
+router.get('/api/users/:userId/orders/total-price', user_controller_1.UserControllers.getOneUserOrderPrice);
 exports.UserRoute = router;

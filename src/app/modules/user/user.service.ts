@@ -48,6 +48,7 @@ const getOneUserOrderFromDB = async (userId: string) => {
   const result = await User.findOne({ userId });
   return result;
 };
+
 export const UserService = {
   createUserIntoDB,
   getAllUserFromDB,

@@ -4,6 +4,10 @@ Server Live Link
 
 ### https://assignment-server-l2.vercel.app/
 
+## Run the server application locally
+
+If you want to run the server on your computer, run the command `tsc -w` in another terminal to convert the TypeScript code to JavaScript code. And start the server with `npm start` command.
+
 ## Server Documentation
 
 - This server is created to manage users and their orders.

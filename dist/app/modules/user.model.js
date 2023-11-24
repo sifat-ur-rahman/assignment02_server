@@ -8,9 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const mongoose_1 = require("mongoose");
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const config_1 = __importDefault(require("../config"));
 const FullNameSchema = new mongoose_1.Schema({
     firstName: { type: String, required: [true, 'First name is required '] },
     lastName: { type: String },
@@ -46,5 +51,13 @@ userSchema.methods.isUserExits = function (id) {
 userSchema.pre(/^find/, function (next) {
     this.select('-password');
     next();
+});
+userSchema.pre('save', function (next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const userData = this;
+        userData.password = yield bcrypt_1.default.hash(userData.password, Number(config_1.default.bcrypt_salt_rounds));
+        next();
+    });
 });
 exports.User = (0, mongoose_1.model)('User', userSchema);

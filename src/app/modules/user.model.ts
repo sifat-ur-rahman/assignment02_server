@@ -7,6 +7,8 @@ import {
   UserMethods,
   TOrders,
 } from './user/user.interface';
+import bcrypt from 'bcrypt';
+import config from '../config';
 
 const FullNameSchema = new Schema<TFullName>({
   firstName: { type: String, required: [true, 'First name is required '] },
@@ -42,6 +44,15 @@ userSchema.methods.isUserExits = async function (id: string) {
 
 userSchema.pre(/^find/, function (this: Query<TUser, Document>, next) {
   this.select('-password');
+  next();
+});
+userSchema.pre('save', async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const userData = this;
+  userData.password = await bcrypt.hash(
+    userData.password,
+    Number(config.bcrypt_salt_rounds),
+  );
   next();
 });
 export const User = model<TUser, UserModel>('User', userSchema);

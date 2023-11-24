@@ -30,6 +30,13 @@ const updateUserFromDB = (userId, updatedUserData) => __awaiter(void 0, void 0, 
     });
     return result;
 });
+const updateUserOrderFromDB = (userId, updatedOrderData) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.User.findOneAndUpdate({ userId }, { $addToSet: { orders: updatedOrderData } }, {
+        new: true,
+        runValidators: true,
+    });
+    return result;
+});
 const deleteOneUserFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_model_1.User.deleteOne({ userId: userId });
     return result;
@@ -40,4 +47,5 @@ exports.UserService = {
     getOneUserFromDB,
     deleteOneUserFromDB,
     updateUserFromDB,
+    updateUserOrderFromDB,
 };

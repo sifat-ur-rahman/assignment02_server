@@ -40,7 +40,7 @@ const userSchema = new mongoose_1.Schema({
     isActive: { type: Boolean },
     hobbies: { type: [String], default: [] },
     address: { type: AddressSchema, required: true },
-    orders: { type: [OrdersSchema] },
+    orders: { type: [OrdersSchema], default: [] },
 });
 userSchema.methods.isUserExits = function (id) {
     return __awaiter(this, void 0, void 0, function* () {

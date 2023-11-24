@@ -146,10 +146,36 @@ const deleteOneUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
     }
 });
+const updateUserOrder = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.params.userId;
+        const updatedUserData = req.body;
+        const result = yield user_service_1.UserService.updateUserOrderFromDB(userId, updatedUserData);
+        if (result) {
+            res.status(200).json({
+                success: true,
+                message: 'Order created successfully!',
+                data: null,
+            });
+        }
+    }
+    catch (err) {
+        res.status(500).json({
+            success: false,
+            message: 'User not found',
+            error: {
+                code: 404,
+                description: 'User not found!',
+            },
+            err,
+        });
+    }
+});
 exports.UserControllers = {
     createUser,
     getAllUser,
     getOneUser,
     deleteOneUser,
     updateUser,
+    updateUserOrder,
 };

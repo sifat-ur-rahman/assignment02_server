@@ -25,6 +25,21 @@ const updateUserFromDB = async (
 
   return result;
 };
+const updateUserOrderFromDB = async (
+  userId: string,
+  updatedOrderData: TUser,
+): Promise<TUser | null> => {
+  const result = await User.findOneAndUpdate(
+    { userId },
+    { $addToSet: { orders: updatedOrderData } },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  return result;
+};
 const deleteOneUserFromDB = async (userId: number) => {
   const result = await User.deleteOne({ userId: userId });
   return result;
@@ -35,4 +50,5 @@ export const UserService = {
   getOneUserFromDB,
   deleteOneUserFromDB,
   updateUserFromDB,
+  updateUserOrderFromDB,
 };

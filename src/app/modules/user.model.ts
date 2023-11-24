@@ -35,7 +35,7 @@ const userSchema = new Schema<TUser, UserModel, UserMethods>({
   isActive: { type: Boolean },
   hobbies: { type: [String], default: [] },
   address: { type: AddressSchema, required: true },
-  orders: { type: [OrdersSchema] },
+  orders: { type: [OrdersSchema], default: [] },
 });
 userSchema.methods.isUserExits = async function (id: string) {
   const existingUser = await User.findOne({ id });

@@ -11,6 +11,12 @@ app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 //application route.
 app.use('/', user_route_1.UserRoute);
+app.get('/', (req, res) => {
+    res.status(200).json({
+        success: true,
+        message: 'Server is running',
+    });
+});
 //route error handler
 app.all('*', (req, res) => {
     res.status(400).json({

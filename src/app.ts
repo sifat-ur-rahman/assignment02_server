@@ -11,6 +11,12 @@ app.use(cors());
 
 app.use('/', UserRoute);
 
+app.get('/', (req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: 'Server is running',
+  });
+});
 //route error handler
 app.all('*', (req: Request, res: Response) => {
   res.status(400).json({

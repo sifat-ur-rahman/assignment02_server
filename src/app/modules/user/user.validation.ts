@@ -17,8 +17,8 @@ const OrdersValidationSchema = z.object({
 });
 
 const userValidationSchema = z.object({
-  userId: z.number().min(1).max(25),
-  username: z.string().min(1).max(25),
+  userId: z.number(),
+  username: z.string(),
   fullName: NameValidationSchema,
   password: z.string(),
   age: z.number(),
@@ -26,7 +26,7 @@ const userValidationSchema = z.object({
   isActive: z.boolean(),
   hobbies: z.array(z.string()),
   address: AddressValidationSchema,
-  orders: z.array(OrdersValidationSchema),
+  orders: z.array(OrdersValidationSchema).optional().default([]),
 });
 
 export default userValidationSchema;

@@ -9,6 +9,7 @@ const createUser = async (req: Request, res: Response) => {
     //data validation using zod
     const zodParserData = userValidationSchema.parse(userData);
     const result = await UserService.createUserIntoDB(zodParserData);
+    console.log({ result });
     res.status(200).json({
       success: true,
       message: 'User created successfully!',
@@ -23,6 +24,7 @@ const createUser = async (req: Request, res: Response) => {
         code: 404,
         description: 'User not found!',
       },
+      err: error,
     });
   }
 };

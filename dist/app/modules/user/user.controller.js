@@ -21,6 +21,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         //data validation using zod
         const zodParserData = user_validation_1.default.parse(userData);
         const result = yield user_service_1.UserService.createUserIntoDB(zodParserData);
+        console.log({ result });
         res.status(200).json({
             success: true,
             message: 'User created successfully!',
@@ -36,6 +37,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 code: 404,
                 description: 'User not found!',
             },
+            err: error,
         });
     }
 });

@@ -16,8 +16,8 @@ const OrdersValidationSchema = zod_1.z.object({
     quantity: zod_1.z.number().min(1),
 });
 const userValidationSchema = zod_1.z.object({
-    userId: zod_1.z.number().min(1).max(25),
-    username: zod_1.z.string().min(1).max(25),
+    userId: zod_1.z.number(),
+    username: zod_1.z.string(),
     fullName: NameValidationSchema,
     password: zod_1.z.string(),
     age: zod_1.z.number(),
@@ -25,6 +25,6 @@ const userValidationSchema = zod_1.z.object({
     isActive: zod_1.z.boolean(),
     hobbies: zod_1.z.array(zod_1.z.string()),
     address: AddressValidationSchema,
-    orders: zod_1.z.array(OrdersValidationSchema),
+    orders: zod_1.z.array(OrdersValidationSchema).optional().default([]),
 });
 exports.default = userValidationSchema;

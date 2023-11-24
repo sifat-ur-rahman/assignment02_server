@@ -30,10 +30,10 @@ const userSchema = new Schema<TUser, UserModel, UserMethods>({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   fullName: { type: FullNameSchema },
-  age: { type: Number },
+  age: { type: Number, required: true },
   email: { type: String, trim: true, required: true },
   isActive: { type: Boolean },
-  hobbies: { type: [String], default: [] },
+  hobbies: { type: [String] },
   address: { type: AddressSchema, required: true },
   orders: { type: [OrdersSchema], default: [] },
 });
